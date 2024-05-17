@@ -1,0 +1,225 @@
+:root {
+  --oranje: #FC6039;
+  --donkerblauw: #0080ff;
+  --blauw: #065fa7;
+  --blauw-hover: #1a21d5;
+  --grijs: #e6e4e0;
+}
+
+body {
+  background:#ADD8E6; /* #CBF7ED, #ADD8E6 */
+  width: 100%;
+  height: 100vh;
+  margin: 0;
+}
+
+#root {
+  width: inherit;
+  height: inherit;
+}
+
+main {
+  height: inherit;
+  width: inherit;
+}
+
+.home-container {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+
+.bereken-pagina-container {
+  padding: 0.5rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 900px;
+}
+
+.wkz-logo {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+}
+
+.homescherm-buttons-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.titel-home{
+  margin-top: -5rem !important;
+  font-size: 5rem !important;
+}
+
+.titels {
+  text-align: center;
+  color: var(--oranje) !important;
+  text-shadow: 2px 2px black;
+  font-size: 3rem;
+}
+
+.button-home {
+  padding-top: 20rem;
+  height: 15rem;
+  border-style: ridge;
+  align-content: center;
+  width: 25rem;
+  font-size: 2rem !important;
+  border-radius: 1.5rem !important;
+}
+
+.bewaren-button-container {
+  padding-bottom: 2rem;
+}
+
+.button {
+  background-color: var(--oranje) !important;
+  
+}
+
+.button:hover {
+  background-color: var(--blauw-hover) !important;
+}
+
+.hover-icon {
+  color: var(--oranje) !important;
+}
+
+.hover-icon:hover {
+  color: var(--blauw-hover) !important;
+  cursor: pointer;
+}
+
+.home-icon {
+  margin-top: 0.5rem;
+  position: absolute;
+
+}
+
+
+.div-lijst {
+  margin-bottom: 0.4rem;
+}
+
+.voedingsmiddel {
+  width: inherit;
+  display: grid;
+  grid-template-columns: 60% calc(20% - 0.5rem) calc(20% - 0.5rem);
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  align-items: center;
+  padding: 0;
+  /* flex-wrap: wrap; */
+}
+
+.voedingsmiddel-select {
+  border: none !important;
+}
+
+.voedingsmiddel-option {
+  flex-wrap: wrap;
+}
+
+.voedingsmiddel-input > input {
+  border-right: 2px solid var(--grijs);
+}
+
+.MuiSelect-listbox > * {
+  overflow: hidden !important;
+}
+
+.tabel-dikgedrukt {
+  font-weight: bold;
+  background-color: var(--grijs) !important;
+}
+
+tr.tabel-dikgedrukt > * {
+  background-color: var(--grijs) !important;
+}
+
+.gegevens-invoer {
+  display: grid;
+  grid-template-columns: calc(50% - 0.25rem) calc(50% - 0.25rem);
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.invoer-datum {
+  grid-column: 1;
+}
+
+.invoer-gewicht {
+  grid-column: 2;
+}
+
+.invoer-switch {
+  width: inherit;
+}
+
+.MuiSwitch-root {
+  --Switch-trackBackground: var(--blauw-hover) !important;
+}
+
+.Mui-checked {
+  --Switch-trackBackground: var(--oranje) !important;
+}
+
+.MuiDivider-root {
+  margin-bottom: 0.5rem !important;  
+  color: black !important;
+}
+
+.MuiDivider-root::after, .MuiDivider-root::before {
+  background-color: black !important;
+  block-size: 2px !important;
+}
+
+
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  border-radius: 100px !important;
+}
+
+th, td {
+  background-color: #FFFFFF !important;
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+
+@media screen and (max-width: 900px) {
+  .homescherm-buttons-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .voedingsmiddel {
+    grid-template: auto / calc(50% - 0.25rem) calc(50% - 0.25rem);
+    max-width: 100%;
+  }
+
+  .voedingsmiddel-select {
+    max-width: 100% !important;
+  }
+
+  .voedingsmiddel-container {
+    grid-column: 1 / span 2;
+  }
+
+  .voedingsmiddel-input {
+    grid-column-start: 2;
+  }
+  
+  .invoer-switch {
+    justify-content: space-between;
+  }
+}

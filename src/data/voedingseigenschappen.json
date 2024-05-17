@@ -1,0 +1,158 @@
+{
+  "voedingsmiddelen": [
+    {
+      "naam": "Moedermelk",
+      "calorieën": 69,
+      "koolhydraten": 7,
+      "eiwitten": 1.3,
+      "vetten": 4.4,
+      "natrium": 0.8,
+      "kalium": 1.3
+      
+    },
+    {
+      "naam": "Moedermelk-BMF",
+      "calorieën": 85,
+      "koolhydraten": 10,
+      "eiwitten": 2.1,
+      "vetten": 4,
+      "natrium": 0.8,
+      "kalium": 1
+    },
+    {
+      "naam": "Nutrilon-1",
+      "calorieën": 66,
+      "koolhydraten": 7.3,
+      "eiwitten": 1.3,
+      "vetten": 3.4,
+      "natrium": 0.74,
+      "kalium": 1.7
+    },
+    {
+      "naam": "Nutrilon-2",
+      "calorieën": 68,
+      "koolhydraten": 8.6,
+      "eiwitten": 3,
+      "vetten": 3,
+      "natrium": 1,
+      "kalium": 2
+    },
+    {
+      "naam": "Nutrilon Pepti Junior",
+      "calorieën": 66,
+      "koolhydraten": 6.8,
+      "eiwitten": 1.8,
+      "vetten": 3.5,
+      "natrium": 0.78,
+      "kalium": 1.66
+    },
+    {
+      "naam": "Infatrini",
+      "calorieën": 101,
+      "koolhydraten": 10.3,
+      "eiwitten": 2.6,
+      "vetten": 5.4,
+      "natrium": 1.6,
+      "kalium": 2.4
+    },
+    {
+      "naam": "Nutrini multifibre",
+      "calorieën": 101,
+      "koolhydraten": 12.3,
+      "eiwitten": 2.7,
+      "vetten": 4.4,
+      "natrium": 2.6,
+      "kalium": 2.8
+    },
+    {
+      "naam": "Nutrini energy multifibre",
+      "calorieën": 151,
+      "koolhydraten": 18.5,
+      "eiwitten": 4,
+      "vetten": 6.7,
+      "natrium": 3.9,
+      "kalium": 4.2
+    },
+    {
+      "naam": "Nutrini max multifibre",
+      "calorieën": 101,
+      "koolhydraten": 12.3,
+      "eiwitten": 3.3,
+      "vetten": 4.2,
+      "natrium": 3.5,
+      "kalium": 3.5
+    },
+    {
+      "naam": "Nutrini max energy multifibre",
+      "calorieën": 152,
+      "koolhydraten": 18.5,
+      "eiwitten": 4.8,
+      "vetten": 6.3,
+      "natrium": 4.7,
+      "kalium": 4.8
+    },
+    {
+      "naam": "Nutrison multifibre",
+      "calorieën": 103,
+      "koolhydraten": 12.3,
+      "eiwitten": 4,
+      "vetten": 3.9,
+      "natrium": 4.3,
+      "kalium": 3.8
+    },
+    {
+      "naam": "Nutrison energy multifibre",
+      "calorieën": 153,
+      "koolhydraten": 18.4,
+      "eiwitten": 6,
+      "vetten": 5.8,
+      "natrium": 5.8,
+      "kalium": 5.1
+    },
+    {
+      "naam": "Nutrison concentrated",
+      "calorieën": 200,
+      "koolhydraten": 20.1,
+      "eiwitten": 7.5,
+      "vetten": 10,
+      "natrium": 4.3,
+      "kalium": 4.6
+    },
+    {
+      "naam": "Monogen",
+      "calorieën": 75,
+      "koolhydraten": 11.6,
+      "eiwitten": 2.2,
+      "vetten": 2.2,
+      "natrium": 1.56,
+      "kalium": 1.8
+    },
+    {
+      "naam": "Energivit",
+      "calorieën": 74,
+      "koolhydraten": 10,
+      "eiwitten": 0,
+      "vetten": 3.75,
+      "natrium": 1.2,
+      "kalium": 1.9
+    },
+    {
+      "naam": "ORS",
+      "calorieën": 35,
+      "koolhydraten": 2,
+      "eiwitten": 0,
+      "vetten": 0,
+      "natrium": 6,
+      "kalium": 2
+    },
+    {
+      "naam": "Fantomalt",
+      "calorieën": 384,
+      "koolhydraten": 96,
+      "eiwitten": 0,
+      "vetten": 0,
+      "natrium": 0.087,
+      "kalium": 0
+    }
+  ]
+}

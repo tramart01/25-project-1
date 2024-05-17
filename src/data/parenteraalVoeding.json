@@ -1,0 +1,85 @@
+{
+  "voedingsmiddelen": [
+    {
+      "naam": "Glucose 5%",
+      "calorieën": 20,
+      "koolhydraten": 5,
+      "eiwitten": 0,
+      "vetten": 0,
+      "natrium": 0,
+      "kalium": 0
+    },
+    {
+      "naam": "Glucose 10%",
+      "calorieën": 40,
+      "koolhydraten": 10,
+      "eiwitten": 0,
+      "vetten": 0,
+      "natrium": 0,
+      "kalium": 0
+    },
+    {
+      "naam": "Glucose 15%",
+      "calorieën": 60,
+      "koolhydraten": 15,
+      "eiwitten": 0,
+      "vetten": 0,
+      "natrium": 0,
+      "kalium": 0
+    },
+    {
+      "naam": "Glucose 50%",
+      "calorieën": 200,
+      "koolhydraten": 50,
+      "eiwitten": 0,
+      "vetten": 0,
+      "natrium": 0,
+      "kalium": 0
+    },
+    {
+      "naam": "Ringers's lactaat",
+      "calorieën": 0,
+      "koolhydraten": 0,
+      "eiwitten": 0,
+      "vetten": 0,
+      "natrium": 13,
+      "kalium": 0.54
+    },
+    {
+      "naam": "NaCl 0,9%",
+      "calorieën": 0,
+      "koolhydraten": 0,
+      "eiwitten": 0,
+      "vetten": 0,
+      "natrium": 15.3,
+      "kalium": 0
+    },
+    {
+      "naam": "NaCl 0.45%, glucose 5%",
+      "calorieën": 20,
+      "koolhydraten": 5,
+      "eiwitten": 0,
+      "vetten": 0,
+      "natrium": 7.65,
+      "kalium": 0
+    },
+    {
+      "naam": "NaCl 0.9%, glucose 5%",
+      "calorieën": 20,
+      "koolhydraten": 5,
+      "eiwitten": 0,
+      "vetten": 0,
+      "natrium": 15.3,
+      "kalium": 0
+    },
+    {
+      "naam": "NaCl 2.9%",
+      "calorieën": 0,
+      "koolhydraten": 0,
+      "eiwitten": 0,
+      "vetten": 0,
+      "natrium": 50,
+      "kalium": 0    
+    }
+  ]
+}

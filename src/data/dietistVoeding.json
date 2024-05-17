@@ -1,0 +1,160 @@
+{
+  "voedingsmiddelen": [
+    {
+      "naam": "Monogen (per 100 gram)",
+      "calorieën": 441,
+      "koolhydraten": 68.6,
+      "eiwitten": 12.8,
+      "vetten": 12.9,
+      "natrium": 9.13,
+      "kalium": 10.18,
+      "calcium": 9.13,
+      "magnesium": 1.83,
+      "fosfaat": 7.10,
+      "allergie": "MCT"
+    },
+    {
+      "naam": "Liquigen (per 100 ml)",
+      "calorieën": 454,
+      "koolhydraten": 0,
+      "eiwitten": 0,
+      "vetten": 50.4,
+      "natrium": 0.22,
+      "kalium": 0,
+      "calcium": 0.025,
+      "magnesium": 0,
+      "fosfaat": 0,
+      "allergie": "MCT, ketogeen, koemelk"
+    },
+    {
+      "naam": "MCT Oil (per 100 ml)",
+      "calorieën": 855,
+      "koolhydraten": 0,
+      "eiwitten": 0,
+      "vetten": 95,
+      "natrium": 0,
+      "kalium": 0,
+      "calcium": 0,
+      "magnesium": 0,
+      "fosfaat": 0,
+      "allergie": "MCT, ketogeen, koemelk"
+    },
+    {
+      "naam": "KetoCal 3:1 (per 100 gram)",
+      "calorieën": 711,
+      "koolhydraten": 7.2,
+      "eiwitten": 15.4,
+      "vetten": 68.6,
+      "natrium": 15.3,
+      "kalium": 23.59,
+      "calcium": 20.25,
+      "magnesium": 3.25,
+      "fosfaat": 17.61,
+      "allergie": "MCT, ketogeen"
+    },
+    {
+      "naam": "KetoCal 4:1 (per 100 gram)",
+      "calorieën": 704,
+      "koolhydraten": 2.8,
+      "eiwitten": 14.3,
+      "vetten": 69.2,
+      "natrium": 23,
+      "kalium": 21.92,
+      "calcium": 19.5,
+      "magnesium": 4.46,
+      "fosfaat": 14.90,
+      "allergie": "MCT, ketogeen"
+    },
+    {
+      "naam": "Calogen (per 100 ml)",
+      "calorieën": 450,
+      "koolhydraten": 0.1,
+      "eiwitten": 0,
+      "vetten": 50,
+      "natrium": 0.30,
+      "kalium": 0,
+      "calcium": 0,
+      "magnesium": 0,
+      "fosfaat": 0,
+      "allergie": "MCT, ketogeen, koemelk"
+    },
+    {
+      "naam": "Duocal (per 100 gram)",
+      "calorieën": 492,
+      "koolhydraten": 72.7,
+      "eiwitten": 0,
+      "vetten": 22.3,
+      "natrium": 0.87,
+      "kalium": 0.13,
+      "calcium": 0.13,
+      "magnesium": 0.21,
+      "fosfaat": 0.16,
+      "allergie": "MCT, koemelk"
+    },
+    {
+      "naam": "Energivit (per 100 gram)",
+      "calorieën": 492,
+      "koolhydraten": 66.9,
+      "eiwitten": 0,
+      "vetten": 25,
+      "natrium": 8.30,
+      "kalium": 12.85,
+      "calcium": 10.25,
+      "magnesium": 2.42,
+      "fosfaat": 9.68,
+      "allergie": "MCT, koemelk"
+    },
+    {
+      "naam": "Milupa basic-p (per 100 gram)",
+      "calorieën": 532,
+      "koolhydraten": 62.6,
+      "eiwitten": 0,
+      "vetten": 31.3,
+      "natrium": 7.57,
+      "kalium": 11.67,
+      "calcium": 11.4,
+      "magnesium": 1.74,
+      "fosfaat": 8.32,
+      "allergie": "MCT, koemelk"
+    },
+    {
+      "naam": "Milupa basic-ch (per 100 gram)",
+      "calorieën": 678,
+      "koolhydraten": 0.14,
+      "eiwitten": 28.6,
+      "vetten": 62,
+      "natrium": 14.73,
+      "kalium": 23.10,
+      "calcium": 23.03,
+      "magnesium": 3.72,
+      "fosfaat": 16.90,
+      "allergie": "MCT, ketogeen"
+    },
+    {
+      "naam": "Milupa basic-f (per 100 gram)",
+      "calorieën": 383,
+      "koolhydraten": 80.3,
+      "eiwitten": 14.1,
+      "vetten": 0.65,
+      "natrium": 6.91,
+      "kalium": 10.64,
+      "calcium": 10.7,
+      "magnesium": 1.51,
+      "fosfaat": 8.55,
+      "allergie": "MCT, koemelk"
+    }
+    {
+      "naam": "Kanso Keto MCT olie (basis plus) 77%",
+      "calorieën": 819,
+      "koolhydraten": 0,
+      "eiwitten": 0,
+      "vetten": 91,
+      "natrium": 0, #kan geen natrium vinden
+      "kalium": 0,
+      "calcium": 0,
+      "magnesium": 0,
+      "fosfaat": 0,
+      "allergie": "MCT, ketogeen, koemelk"
+    }
+  ]
+}
