@@ -1,17 +1,22 @@
-## Running React on Repl.it
 
-[React](https://reactjs.org/) is a popular JavaScript library for building user interfaces.
+# Nutrilator READ-ME
 
-[Vite](https://vitejs.dev/) is a blazing fast frontend build tool that includes features like Hot Module Reloading (HMR), optimized builds, and TypeScript support out of the box.
+In dit bestand staat een korte beschrijving over de applicatie zelf en hoe de applicatie te installeren. 
 
-Using the two in conjunction is one of the fastest ways to build a web app.
 
-### Getting Started
-- Hit run
-- Edit [App.jsx](#src/App.jsx) and watch it live update!
+## Beschrijving applicatie
+Deze app kan gebruikt worden door kinderartsen met betrekking tot metabole ziekten en diëtisten van het WKZ voor het berekenen van sondevoeding en infusievloeistoffen. De applicatie helpt bij het berekenen van de hoeveelheden toegediende sondevoeding en infusievloeistoffen, het laat onder andere de totale toegediende hoeveelheid vloeistoffen zien en de hoeveelheden van bepaalde voedingsstoffen zien (zoals koolhydraten, eiwitten, vetten, natrium, kalium). 
 
-By default, Replit runs the `dev` script, but you can configure it by changing the `run` field in the [configuration file](#.replit). Here are the vite docs for [serving production websites](https://vitejs.dev/guide/build.html)
+## Installatie van de applicatie
 
-### Typescript
+## Beginnen met gebruik van de applicatie
+Het eerste scherm wat de gebruiker te zien krijgt is het [beginscherm (home scherm)](src/pages/Home.jsx). Vanuit hier heeft de gebruiker twee opties: 1. Het toevoegen van een [nieuwe berekening](src/pages/CalculatorPage.jsx). 2. Verdergaan met een eerder toegevoegde patiënt. 
+## Authors
 
-Just rename any file from `.jsx` to `.tsx`. You can also try our [TypeScript Template](https://replit.com/@replit/React-TypeScript)
+- Arthur Hoogerbrug
+- Afram Samuel
+- Joël van der Roest
+- Mart Dijkstra
+- Melissa Steenbakker
+
+
