@@ -17,7 +17,8 @@ import SuccessModal from '../components/SuccessModal';
 
 export default function CalculatorPberekendeLeeftijd(props) {
 
- 
+
+  const [voedingsLijst, setVoedingsLijst] = useState([]);
   // Alle voedingsmiddelen bij elkaar
   const [voedingsLijstEnteraal, setVoedingsLijstEnteraal] = useState([]);
   const [voedingsLijstParenteraal, setVoedingsLijstParenteraal] = useState([]);
@@ -82,7 +83,7 @@ export default function CalculatorPberekendeLeeftijd(props) {
       </div>
 
       <div className="gegevens-invoer">
-        <UserInput naamClass="invoer-datum" type="date" label="Geboortedatum" placeholder="" value={datum} changeValue={setDatum} onDefocus={berekenDatum} />
+        <UserInput naamClass="invoer-datum" type="date" label="Geboortedatum" placeholder="" value={datum} changeValue={setDatum} onDefocus={berekenLeeftijd} />
         <UserInput naamClass="invoer-gewicht" type="text" label="Gewicht" placeholder="18 kg" value={gewichtInput} changeValue={setGewichtInput} onDefocus={handleGewichtChange} />
       </div>
       
@@ -105,8 +106,8 @@ export default function CalculatorPberekendeLeeftijd(props) {
         gewicht={gewicht}
         isPolymeer={isPolymeer}
         isEnteraal={true}
-        onChange={changeLijst}
-        voedingslijst={voedingsLijstEnteraal}
+        onChange={setVoedingsLijst}
+        voedingslijst={voedingsLijst}
       ></VoedingsmiddelenLijst>
 
       <Typography level="h3" component="h3">
@@ -114,12 +115,12 @@ export default function CalculatorPberekendeLeeftijd(props) {
       </Typography>
       
       <VoedingsmiddelenLijst
-        leeftijd={10}
-        gewicht={10}
-        isPolymeer={true}
+        leeftijd={leeftijd}
+        gewicht={gewicht}
+        isPolymeer={isPolymeer}
         isEnteraal={false}
-        onChange={changeLijst}
-        voedingslijst={voedingsLijstParenteraal}
+        onChange={setVoedingsLijst}
+        voedingslijst={voedingsLijst}
       ></VoedingsmiddelenLijst>
 
       
@@ -146,7 +147,7 @@ export default function CalculatorPberekendeLeeftijd(props) {
     }
   }
 
-  function berekenDatum(datum) {
+  function berekenLeeftijd(datum) {
       // Parse the string to a date object
       const geboorteDatum = new Date(datum);
       const huidigeDatum = new Date();
@@ -197,6 +198,7 @@ export default function CalculatorPberekendeLeeftijd(props) {
 
     
     setDatum(formatDate(huidigePatient.datum, true));
+    berekenLeeftijd(huidigePatient.datum);
     setGewicht(huidigePatient.gewicht);
     setGewichtInput(huidigePatient.gewicht);
     setVoedingsLijstEnteraal(huidigePatient.voedingsLijstEnteraal);
