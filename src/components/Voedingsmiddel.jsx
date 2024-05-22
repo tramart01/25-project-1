@@ -16,11 +16,13 @@ export default function Voedingsmiddel(props) {
   const [hoeveelheid, setHoeveelheid] = useState(0);
   const [frequentie, setFrequentie] = useState(0);
   const voedingsmiddelLijst = props.voedingsmiddelLijst;
+  // const gefilterdeLijst = props.gefilterdeLijst;  
 
   
   useEffect(() => {
     handleOnChange(props.id, props.onChange);
   }, [hoeveelheid, voedingsmiddel, frequentie]);
+
 
   
   return (
@@ -83,8 +85,7 @@ export default function Voedingsmiddel(props) {
             <>
                <Option className="voedingsmiddel-option" key={voedingsmiddel.naam} value={voedingsmiddel.naam} 
                  sx={{
-                   paddingTop: "0.25rem",
-                   paddingBottom: "0.25rem",
+                   padding: "0.25rem 0.5rem",
                  }}
                  >{voedingsmiddel.naam}</Option>
               {index + 1 !== voedingsmiddelLijst.length && <ListDivider role="none" sx={{
@@ -97,12 +98,13 @@ export default function Voedingsmiddel(props) {
         </Select>
       </Box>
       
-      {props.isEnteraal && <UserInput naamClass="voedingsmiddel-input" label="none" placeholder="Hoeveelheid" changeValue={setHoeveelheid} endDecorator="ml" />}
-
+      {props.isEnteraal && 
+        <>
+          <UserInput naamClass="voedingsmiddel-input" label="none" placeholder="Hoeveelheid" changeValue={setHoeveelheid} endDecorator="ml" />
+          <UserInput naamClass="voedingsmiddel-input" label="none" placeholder="Frequentie" changeValue={setFrequentie} endDecorator="keer/dag" />
+        </> }
 
       {!props.isEnteraal && <UserInput naamClass="voedingsmiddel-input" label="none" placeholder="Hoeveelheid" changeValue={setHoeveelheid} endDecorator="ml/uur" />}
-      
-      {props.isEnteraal && <UserInput naamClass="voedingsmiddel-input" label="none" placeholder="Frequentie" changeValue={setFrequentie} endDecorator="keer/dag" />}
     </div>
   );
 
@@ -114,7 +116,8 @@ export default function Voedingsmiddel(props) {
       if (props.isEnteraal) {
         returnObject.frequentie = frequentie;
       }
-      onChange(object[0], id);
+      returnObject.isEnteraal = props.isEnteraal;
+      onChange(returnObject, id);
     } 
   }
 
