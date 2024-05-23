@@ -10,7 +10,7 @@ import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 
 export default function AlertModal(props) {
   return (
-    <Modal open={props.open} onClose={props.onClose}>
+    <Modal open={props.open} onClose={() => props.onClose(false)}>
       <ModalDialog variant="outlined" role="alertdialog"
         sx={(theme) => ({
           [theme.breakpoints.only('xs')]: {
@@ -24,12 +24,12 @@ export default function AlertModal(props) {
         </DialogTitle>
         <Divider />
         <DialogContent>
-          Er zijn gegevens ingevuld, als je deze pagina verlaat zijn deze niet opgeslagen. Wil je doorgaan?
+          {props.children}
         </DialogContent>
         <DialogActions>
-          <Button variant="solid" color="danger" onClick={props.onConfirm}>
+          {props.onConfirm !== null && <Button variant="solid" color="danger" onClick={props.onConfirm}>
             Terug naar home
-          </Button>
+          </Button>}
           <Button variant="plain" color="neutral" onClick={() => props.onClose(false)}>
             Verder bewerken
           </Button>

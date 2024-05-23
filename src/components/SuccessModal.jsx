@@ -12,7 +12,7 @@ import { renderTable } from '../pages/CalculatorPage';
 
 export default function SuccessModal (props) {
   return (
-    <Modal open={props.open}>
+    <Modal open={props.open} onClose={() => props.onClose(false)}>
       <ModalDialog variant="outlined"
         sx={(theme) => ({
           [theme.breakpoints.only('xs')]: {
@@ -45,7 +45,7 @@ export default function SuccessModal (props) {
         <Divider />
         <DialogContent>
           {props.children}
-          {renderTable(props.voedingswaardeLijstEnteraal, props.voedingswaardeLijstParenteraal, props.gewicht)}
+          {/* {renderTable(props.voedingswaardeLijstEnteraal, props.voedingswaardeLijstParenteraal, props.gewicht)} */}
         </DialogContent>
         <DialogActions sx={{justifyContent: "center"}}>
           <HomeIcon className="hover-icon" sx={{fontSize: "3rem"}} onClick={props.onClick} />
