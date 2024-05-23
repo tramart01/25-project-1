@@ -10,8 +10,11 @@ Deze app kan gebruikt worden door kinderartsen met betrekking tot metabole ziekt
 ## Installatie van de applicatie
 
 ## Beginnen met gebruik van de applicatie
-Het eerste scherm wat de gebruiker te zien krijgt is het [beginscherm (home scherm)](src/pages/Home.jsx). Vanuit hier heeft de gebruiker twee opties: 1. Het toevoegen van een [nieuwe berekening](src/pages/CalculatorPage.jsx). 2. Verdergaan met een eerder toegevoegde patiënt. 
-## Authors
+Het eerste scherm wat de gebruiker te zien krijgt is het [beginscherm (home scherm)](src/pages/Home.jsx). Vanuit hier heeft de gebruiker twee opties: 
+1. Het toevoegen van een [nieuwe berekening](src/pages/CalculatorPage.jsx).
+2. Verdergaan met een eerder toegevoegde patiënt.
+
+## Auteurs
 
 - Arthur Hoogerbrug
 - Afram Samuel

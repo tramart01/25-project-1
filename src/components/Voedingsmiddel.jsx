@@ -12,18 +12,33 @@ import CloseRounded from '@mui/icons-material/CloseRounded';
 
 
 export default function Voedingsmiddel(props) {
-  const [voedingsmiddel, setVoedingsmiddel] = useState(null);
-  const [hoeveelheid, setHoeveelheid] = useState(0);
-  const [frequentie, setFrequentie] = useState(0);
+  const [voedingsmiddel, setVoedingsmiddel] = useState(props.naam);
+  const [hoeveelheid, setHoeveelheid] = useState(props.hoeveelheid);
+  const [frequentie, setFrequentie] = useState(props.frequentie);
   const voedingsmiddelLijst = props.voedingsmiddelLijst;
   // const gefilterdeLijst = props.gefilterdeLijst;  
 
   
   useEffect(() => {
+    console.log("verandering", hoeveelheid, frequentie);
     handleOnChange(props.id, props.onChange);
   }, [hoeveelheid, voedingsmiddel, frequentie]);
 
+  useEffect(() => {
+    if (hoeveelheid == 0) {
+      setHoeveelheid(null);
+    }
+  }, [hoeveelheid])
 
+
+  // useEffect(() => {
+  //   setHoeveelheid(props.hoeveelheid)
+  // }, [props.hoeveelheid])
+
+  // useEffect(() => {
+  //   setHoeveelheid(props.hoeveelheid);
+  // }, [props.frequentie])
+  
   
   return (
     <div className="voedingsmiddel">
@@ -32,7 +47,7 @@ export default function Voedingsmiddel(props) {
         <Select className="voedingsmiddel-select" 
           placeholder="---" 
           indicator={<KeyboardArrowDownIcon />} 
-          value={voedingsmiddel} 
+          value={props.naam} 
           defaultValue="" 
           onChange={(e, value) => setVoedingsmiddel(value)}
           {...(voedingsmiddel && {
@@ -97,27 +112,35 @@ export default function Voedingsmiddel(props) {
           {voedingsmiddelLijst.length === 0 && <Option className="voedingsmiddel-option" value="" indicator={<KeyboardArrowDownIcon />} disabled={true}>Geen voedingsmiddelen voor deze gegevens</Option>}
         </Select>
       </Box>
-      
+
+      {/* Hier navragen of er een manier is om onDefocus niet te hoeven gebruiken, of anders op een of andere manier geen waarde meegeven */}
       {props.isEnteraal && 
         <>
-          <UserInput naamClass="voedingsmiddel-input" label="none" placeholder="Hoeveelheid" changeValue={setHoeveelheid} endDecorator="ml" />
-          <UserInput naamClass="voedingsmiddel-input" label="none" placeholder="Frequentie" changeValue={setFrequentie} endDecorator="keer/dag" />
+          <UserInput naamClass="voedingsmiddel-input" label="none" placeholder="Frequentie" value={frequentie} changeValue={setFrequentie} onDefocus={setFrequentie}  endDecorator="keer" />
+          <UserInput naamClass="voedingsmiddel-input" label="none" placeholder="Hoeveelheid" value={hoeveelheid} changeValue={setHoeveelheid} onDefocus={setHoeveelheid} endDecorator="ml" />
         </> }
 
-      {!props.isEnteraal && <UserInput naamClass="voedingsmiddel-input" label="none" placeholder="Hoeveelheid" changeValue={setHoeveelheid} endDecorator="ml/uur" />}
+      {!props.isEnteraal && <UserInput naamClass="voedingsmiddel-input" label="none" placeholder="Hoeveelheid" value={hoeveelheid} changeValue={setHoeveelheid} onDefocus={setHoeveelheid} endDecorator="ml/uur" />}
     </div>
   );
 
   function handleOnChange(id, onChange) {
+    console.log("In verandering functie");
+    console.log("voedingsmiddel", voedingsmiddel, voedingsmiddelLijst);
     if (voedingsmiddel !== null) {
       let object = voedingsmiddelLijst.filter((voedingsmiddelLijst) => (voedingsmiddelLijst.naam === voedingsmiddel));
-      let returnObject = object[0];
-      returnObject.hoeveelheid = hoeveelheid;
-      if (props.isEnteraal) {
-        returnObject.frequentie = frequentie;
+      console.log(object, "object");
+      if (object.length > 0) {
+        let returnObject = object[0];
+        console.log(returnObject);
+        returnObject.hoeveelheid = Number(hoeveelheid);
+        if (props.isEnteraal) {
+          returnObject.frequentie = Number(frequentie);
+        }
+        returnObject.isEnteraal = props.isEnteraal;
+        console.log(returnObject);
+        onChange(returnObject, id);
       }
-      returnObject.isEnteraal = props.isEnteraal;
-      onChange(returnObject, id);
     } 
   }
 
