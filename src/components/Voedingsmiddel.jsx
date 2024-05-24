@@ -16,19 +16,23 @@ export default function Voedingsmiddel(props) {
   const [hoeveelheid, setHoeveelheid] = useState(props.hoeveelheid);
   const [frequentie, setFrequentie] = useState(props.frequentie);
   const voedingsmiddelLijst = props.voedingsmiddelLijst;
-  // const gefilterdeLijst = props.gefilterdeLijst;  
 
   
   useEffect(() => {
-    console.log("verandering", hoeveelheid, frequentie);
     handleOnChange(props.id, props.onChange);
   }, [hoeveelheid, voedingsmiddel, frequentie]);
 
   useEffect(() => {
     if (hoeveelheid == 0) {
-      setHoeveelheid(null);
+      setHoeveelheid("");
     }
   }, [hoeveelheid])
+
+  useEffect(() => {
+    if (frequentie == 0) {
+      setFrequentie("");
+    }
+  }, [frequentie])
 
 
   // useEffect(() => {
@@ -118,20 +122,15 @@ export default function Voedingsmiddel(props) {
   );
 
   function handleOnChange(id, onChange) {
-    console.log("In verandering functie");
-    console.log("voedingsmiddel", voedingsmiddel, voedingsmiddelLijst);
     if (voedingsmiddel !== null) {
       let object = voedingsmiddelLijst.filter((voedingsmiddelLijst) => (voedingsmiddelLijst.naam === voedingsmiddel));
-      console.log(object, "object");
       if (object.length > 0) {
         let returnObject = object[0];
-        console.log(returnObject);
         returnObject.hoeveelheid = Number(hoeveelheid);
         if (props.isEnteraal) {
           returnObject.frequentie = Number(frequentie);
         }
         returnObject.isEnteraal = props.isEnteraal;
-        console.log(returnObject);
         onChange(returnObject, id);
       }
     } 
@@ -186,7 +185,6 @@ function renderTable(arr) {
             <td>{voedingsmiddel.calcium}</td>
             <td>{voedingsmiddel.magnesium}</td>
             <td>{voedingsmiddel.fosfaat}</td>
-            <td>{voedingsmiddel.isPolymeer.toString()}</td>
             <td>{voedingsmiddel.minLeeftijd}</td>
             <td>{voedingsmiddel.maxLeeftijd}</td>
             <td>{voedingsmiddel.minGewicht}</td>

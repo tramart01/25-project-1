@@ -6,7 +6,7 @@ import Switch from "@mui/joy/Switch";
 import { useState, useEffect } from "react";
 import Divider from '@mui/joy/Divider';
 import Table from '@mui/joy/Table';
-import { berekenenVoedingswaardes, berekenTotaal } from '../logic/berekenenVoedingswaardes';
+import { berekenTotaal, berekenVoedingsWaardes, berekenenVoedingswaardesTabel } from '../logic/berekenenVoedingswaardes';
 import { getPatientData, storePatientData } from '../logic/localSave';
 import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -15,7 +15,7 @@ import AlertModal from '../components/AlertModal';
 import SuccessModal from '../components/SuccessModal';
 
 
-export default function CalculatorPberekendeLeeftijd(props) {
+export default function CalculatorPage(props) {
 
   const ABSOULTEWAARDEVOCHT = 3500; // 3.5 L/dag
   const BOVENGRENSVOCHT = 300; // 300mL/kg
@@ -27,6 +27,8 @@ export default function CalculatorPberekendeLeeftijd(props) {
 
   //Lijst met de totale voedingswaarde voor de enterale en parenterale voedingsmiddelen + het totale aantal voedingsmiddelen
   const [voedingswaardeLijst, setVoedingswaardeLijst] = useState({totaal: {}, enteraal: {}, parenteraal: {}});
+
+  const [voedingswaardeTabel, setVoedingswaardeTabel] = useState({totaal: {}, enteraal: {}, parenteraal: {}});
   
   const title = props.isNieuw ? "Nieuwe berekening" : "Laatst bewerkt";
   
@@ -34,7 +36,6 @@ export default function CalculatorPberekendeLeeftijd(props) {
   const [datum, setDatum] = useState("");
   const [gewichtInput, setGewichtInput] = useState("");
   const [gewicht, setGewicht] = useState(0);
-  const [isPolymeer, setIsPolymeer] = useState(true);
 
   const [opgeslagenObject, setOpgeslagenObject] = useState({});
   const [openAlert, setOpenAlert] = useState(false);
@@ -43,42 +44,31 @@ export default function CalculatorPberekendeLeeftijd(props) {
   const navigate = useNavigate();
   const { state } = useLocation();
 
+  //Doordat het tweede argument een lege array is wordt het effect maar een keer doorlopen
   useEffect(() => {
     if (!props.isNieuw) {
       patientGegevensOphalen();
     }
   }, [])
-  
-  useEffect(() => {
-    console.log("Generale voedingslijst", voedingsLijst);
-  }, [voedingsLijst]);
 
-
+  //Als de voedingsLijst veranderd, moet de berekening van de voedingswaardes opnieuw gedaan worden.
   useEffect(() => {
-    console.log("opgeslagenobject", opgeslagenObject);
-  }, [opgeslagenObject])
-  
-  useEffect(() => {
-    console.log(gewicht, leeftijd);
-  }, [gewicht, leeftijd]);
-
-  useEffect(() => {
+    let berekendeWaarden = {};
     for (let voedingsmiddel in voedingsLijst) {
-      setVoedingswaardeLijst((voedingswaarde) => ({
-        ...voedingswaarde,
-        [voedingsmiddel]: berekenenVoedingswaardes(voedingsLijst[voedingsmiddel], voedingsmiddel),
-      }))
-      console.log("voedingswaarde", voedingsmiddel);
+      berekendeWaarden[voedingsmiddel] = berekenVoedingsWaardes(voedingsLijst[voedingsmiddel]);
     }
-    console.log(voedingswaardeLijst);
-    // setVoedignswaardeLijst(berekenVoedingswaardes(voedingsLijst));
+    setVoedingswaardeLijst((voedingswaarde) => ({
+      ...voedingswaarde,
+      berekendeWaarden
+      }))
   }, [voedingsLijst])
 
+  //Berekent de totale voedingswaarden wanneer er een verandering in de enterale of parenterale lijst plaatsvindt
   useEffect(() => {
     console.log("enteraal of parenteraal veranderd");
     setVoedingswaardeLijst((voedingswaarde) => ({
       ...voedingswaarde,
-      totaal: berekenTotaal(voedingswaardeLijst),
+      totaal: berekenTotaal(voedingswaardeLijst)
     }))
   }, [voedingswaardeLijst.enteraal, voedingswaardeLijst.parenteraal])
 
@@ -89,10 +79,21 @@ export default function CalculatorPberekendeLeeftijd(props) {
     } else {
       var grens = BOVENGRENSVOCHT;
     }
-    if (voedingswaardeLijst.totaal.hoeveelheid > ABSOULTEWAARDEVOCHT || voedingswaardeLijst.totaal.hoeveelheid / gewicht > grens) {
+    if (voedingswaardeLijst.totaal.hoeveelheid !== null && (voedingswaardeLijst.totaal.hoeveelheid > ABSOULTEWAARDEVOCHT || voedingswaardeLijst.totaal.hoeveelheid / gewicht > grens)) {
       setOpenAlertGrens(true);
     }
   }, [voedingswaardeLijst.totaal])
+
+
+  useEffect(() => {
+    let berekendeWaarden = {};
+
+    for (let voedingsmiddel in voedingswaardeLijst) {
+      berekendeWaarden[voedingsmiddel] = berekenenVoedingswaardesTabel(voedingswaardeLijst[voedingsmiddel], gewicht);
+    }
+    setVoedingswaardeTabel(berekendeWaarden);
+    console.log("Voor tabel", voedingswaardeTabel);
+  }, [voedingswaardeLijst]);
   
   return (
     <div className="bereken-pagina-container">
@@ -121,17 +122,6 @@ export default function CalculatorPberekendeLeeftijd(props) {
         <UserInput naamClass="invoer-datum" type="date" label="Geboortedatum" placeholder="" value={datum} changeValue={setDatum} onDefocus={berekenLeeftijd} />
         <UserInput naamClass="invoer-gewicht" type="text" label="Gewicht" placeholder="18 kg" value={gewichtInput} changeValue={setGewichtInput} onDefocus={handleGewichtChange} />
       </div>
-      
-      {/* Hoeft niet meer geïmplementeerd te worden volgens Eva
-      <Typography
-        className="invoer-switch"
-        component="label"
-        endDecorator={
-          <Switch sx={{ ml: 1 }} onChange={() => setIsPolymeer(!isPolymeer)} />
-        }
-      >
-        Koemelkallergie
-      </Typography> */}
 
       <Typography level="h3" component="h3">
         Enteraal
@@ -140,7 +130,6 @@ export default function CalculatorPberekendeLeeftijd(props) {
       <VoedingsmiddelenLijst
         leeftijd={leeftijd}
         gewicht={gewicht}
-        isPolymeer={isPolymeer}
         isEnteraal={true}
         onChange={setVoedingsLijst}
         voedingsLijst={voedingsLijst.enteraal}
@@ -153,7 +142,6 @@ export default function CalculatorPberekendeLeeftijd(props) {
       <VoedingsmiddelenLijst
         leeftijd={leeftijd}
         gewicht={gewicht}
-        isPolymeer={isPolymeer}
         isEnteraal={false}
         onChange={setVoedingsLijst}
         voedingsLijst={voedingsLijst.parenteraal}
@@ -170,7 +158,7 @@ export default function CalculatorPberekendeLeeftijd(props) {
         Voedingswaardes:
       </Typography>
       
-      {renderTable(voedingswaardeLijst, gewicht)}
+      {/* {renderTable(voedingswaardeLijst, gewicht)} */}
     </div>
   );
 
@@ -190,7 +178,6 @@ export default function CalculatorPberekendeLeeftijd(props) {
       const huidigeDatum = new Date();
     
       if (datum.length === 10 && datum.substring(0, 2) !== "000") {
-        console.log("in datum if statment", datum);
         setDatum(formatDate(datum, true));
       } 
 

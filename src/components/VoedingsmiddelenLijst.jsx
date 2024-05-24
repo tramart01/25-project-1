@@ -3,7 +3,6 @@ import AddIcon from '@mui/icons-material/Add';
 import Voedingsmiddel from '../components/Voedingsmiddel';
 import { useState, useEffect } from 'react';
 import { returnVoedingsLijst } from '../logic/importJSON';
-import { berekenenVoedingswaardes } from '../logic/berekenenVoedingswaardes';
 
 
 export default function VoedingsmiddelenLijst(props) {
