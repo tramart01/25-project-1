@@ -103,6 +103,9 @@ export default function CalculatorPberekendeLeeftijd(props) {
       
       <SuccessModal open={openSuccess} gewicht={gewicht} onClose={setOpenSuccess} onClick={() => navigate('/')} >
         <Typography level="h3" >Voedingswaarden:</Typography>
+        <Button variant="plain" color="neutral" onClick={handleKopieren}>
+          Kopiëren naar klembord
+        </Button>
       </SuccessModal>
       
       <div className="header">        
@@ -248,6 +251,20 @@ export default function CalculatorPberekendeLeeftijd(props) {
     } else {
       setOpenAlert(true);
     }
+  }
+
+
+  // Deze functie verzorgt het kopiëren van de belangrijke voedingswaardes, zodat deze door de gebruiker makkelijk verwerkt kunnen worden in het EPD
+  function handleKopieren() {
+    var outputText = `Vocht: ${voedingswaardeLijst.totaal.hoeveelheid} ml/kg/d; 
+Calorisch: ${voedingswaardeLijst.totaal.calorieën} kcal/kg/d; 
+Glucose Intake: ${voedingswaardeLijst.totaal.koolhydraten} mg/kg/min; 
+Natrium Intake: ${voedingswaardeLijst.totaal.koolhydraten} mmol/kg/d`;
+    navigator.clipboard.writeText(outputText)
+      .then(() => { 
+        alert("De volgende informatie is gekopieërd:\n" + outputText);
+      });
+    
   }
 }
 
