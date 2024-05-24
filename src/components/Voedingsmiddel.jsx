@@ -87,14 +87,7 @@ export default function Voedingsmiddel(props) {
               }
             }
           }}
-          >
-  
-          <ListItem sticky>
-            <Typography level="body-xs" textTransform="uppercase">
-              Gefilterd ({voedingsmiddelLijst.length})
-            </Typography>
-          </ListItem>
-          
+          >          
           
           {voedingsmiddelLijst.length > 0 && voedingsmiddelLijst.map((voedingsmiddel, index) => (
             <>
