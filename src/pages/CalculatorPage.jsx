@@ -57,10 +57,8 @@ export default function CalculatorPage(props) {
     for (let voedingsmiddel in voedingsLijst) {
       berekendeWaarden[voedingsmiddel] = berekenVoedingsWaardes(voedingsLijst[voedingsmiddel]);
     }
-    setVoedingswaardeLijst((voedingswaarde) => ({
-      ...voedingswaarde,
-      berekendeWaarden
-      }))
+    berekendeWaarden.totaal = voedingswaardeLijst.totaal;
+    setVoedingswaardeLijst(berekendeWaarden);
   }, [voedingsLijst])
 
   //Berekent de totale voedingswaarden wanneer er een verandering in de enterale of parenterale lijst plaatsvindt
@@ -89,8 +87,10 @@ export default function CalculatorPage(props) {
     let berekendeWaarden = {};
 
     for (let voedingsmiddel in voedingswaardeLijst) {
+      console.log(voedingswaardeLijst);
       berekendeWaarden[voedingsmiddel] = berekenenVoedingswaardesTabel(voedingswaardeLijst[voedingsmiddel], gewicht);
     }
+    console.log(berekendeWaarden);
     setVoedingswaardeTabel(berekendeWaarden);
     console.log("Voor tabel", voedingswaardeTabel);
   }, [voedingswaardeLijst]);

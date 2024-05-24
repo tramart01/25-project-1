@@ -44,8 +44,6 @@ export function berekenTotaal(voedingswaardeLijst) {
 
 
 export function berekenenVoedingswaardesTabel(voedingsLijst, gewicht) {
-  console.log(voedingsLijst, gewicht);
-
   var vochtTotaal = voedingsLijst.hoeveelheid;
   var vochtKGPerDag = vochtTotaal / gewicht;
   var vochtKGPerUur = vochtKGPerDag / 24;
@@ -56,19 +54,19 @@ export function berekenenVoedingswaardesTabel(voedingsLijst, gewicht) {
   var vetten = voedingsLijst.vetten / gewicht;
   var natrium = voedingsLijst.natrium / gewicht;
   var kalium = voedingsLijst.kalium / gewicht;
-
-  var berekendObject = {
-    vochtTotaal: vochtTotaal,
-    vochtKGPerDag: vochtKGPerDag,
-    vochtKGPerUur: vochtKGPerUur,
-    calorieënTotaal: calorieënTotaal,
-    calorieënPerKG: calorieënPerKG,
-    koolhydraten: koolhydraten,
-    eiwitten: eiwitten,
-    vetten: vetten,
-    natrium: natrium,
-    kalium: kalium
-  };
-  return berekendObject;
+  
+  return (
+    {
+      vochtTotaal: vochtTotaal,
+      vochtKGPerDag: vochtKGPerDag,
+      vochtKGPerUur: vochtKGPerUur,
+      calorieënTotaal: calorieënTotaal,
+      calorieënPerKG: calorieënPerKG,
+      koolhydraten: koolhydraten,
+      eiwitten: eiwitten,
+      vetten: vetten,
+      natrium: natrium,
+      kalium: kalium
+    });
 }
 
