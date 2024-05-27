@@ -44,17 +44,17 @@ export function berekenTotaal(voedingswaardeLijst) {
 
 
 export function berekenenVoedingswaardesTabel(voedingsLijst, gewicht) {
-  var vochtTotaal = voedingsLijst.hoeveelheid;
-  var vochtKGPerDag = vochtTotaal / gewicht;
-  var vochtKGPerUur = vochtKGPerDag / 24;
-  var calorieënTotaal = voedingsLijst.calorieën;
-  var calorieënPerKG = calorieënTotaal / gewicht;
-  var koolhydraten = voedingsLijst.koolhydraten / 1.44 / gewicht;
-  var eiwitten = voedingsLijst.eiwitten / gewicht;
-  var vetten = voedingsLijst.vetten / gewicht;
-  var natrium = voedingsLijst.natrium / gewicht;
-  var kalium = voedingsLijst.kalium / gewicht;
-  
+  var vochtTotaal = Math.round(voedingsLijst.hoeveelheid * 10) / 10;
+  var vochtKGPerDag = Math.round((vochtTotaal / gewicht) * 10) / 10;
+  var vochtKGPerUur = Math.round(vochtKGPerDag / 24 * 10) / 10;
+  var calorieënTotaal = Math.round(voedingsLijst.calorieën * 10) / 10;
+  var calorieënPerKG = Math.round((calorieënTotaal / gewicht) * 10) / 10;
+  var koolhydraten = Math.round((voedingsLijst.koolhydraten / 1.44 / gewicht) * 10) / 10;
+  var eiwitten = Math.round((voedingsLijst.eiwitten / gewicht) * 10) / 10;
+  var vetten = Math.round((voedingsLijst.vetten / gewicht) * 10) / 10;
+  var natrium = Math.round((voedingsLijst.natrium / gewicht) * 10) / 10;
+  var kalium = Math.round((voedingsLijst.kalium / gewicht) * 10) / 10;
+
   return (
     {
       vochtTotaal: vochtTotaal,
