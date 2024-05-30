@@ -17,7 +17,7 @@ export default function InstallPWAModal(props) {
   const buttonValue = useRef("Installeren");
   const isIos = () => {
     const userAgent = window.navigator.userAgent.toLowerCase();
-    return /iphone|ipad|ipod/.test(userAgent);
+    return /iphone|ipad|ipod|macbook/.test(userAgent);
   };
   if (isIos()) {
     buttonValue.current = "Lees hoe";
@@ -63,7 +63,7 @@ export default function InstallPWAModal(props) {
         </DialogTitle>
         <Divider />
         <DialogContent>
-          Je kan Nutrilator ook installeren
+          Je kunt NutriCalc ook als applicatie installeren op dit apparaat.
         </DialogContent>
         <DialogActions>
           <Button variant="solid" color="success" onClick={handleOnClick}>

@@ -104,7 +104,6 @@ main {
 
 }
 
-
 .div-lijst {
   margin-bottom: 0.4rem;
 }
@@ -117,7 +116,6 @@ main {
   margin-bottom: 0.5rem;
   align-items: center;
   padding: 0;
-  /* flex-wrap: wrap; */
 }
 
 .voedingsmiddel-select {
@@ -183,6 +181,11 @@ tr.tabel-dikgedrukt > * {
 }
 
 
+.success-modal-container {
+  display: flex;
+  justify-content: space-between;
+}
+
 
 table {
   border-collapse: collapse;
@@ -199,11 +202,28 @@ th, td {
 
 
 @media screen and (max-width: 900px) {
+  body {
+    heigth: 100svh;
+  }
   .homescherm-buttons-container {
     flex-direction: column;
     align-items: center;
+    width: 70%;
+    margin: 0 auto;
   }
 
+  .wkz-logo {
+    top: 1.5rem;
+    left: 50%;
+    transform: translate(-50%);
+  }
+
+  .button-home {
+    width: 20rem;
+    height: 12.5rem;
+    font-size: 1.75rem !important;
+  }
+  
   .voedingsmiddel {
     grid-template: auto / calc(50% - 0.25rem) calc(50% - 0.25rem);
     max-width: 100%;
@@ -222,8 +242,8 @@ th, td {
   }
 }
 
-@media screen and (max-width: 500px) {
+/* @media screen and (max-width: 500px) {
   .invoer-switch {
     justify-content: space-between;
   }
-}
+} */

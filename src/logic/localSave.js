@@ -1,38 +1,69 @@
+// Haalt alle opgeslagen keys uit de local storage en returnt deze in een array.
 export const getLocalStoredData = () => {
-  let opgeslagenData = [];
   try {
     var opgeslagenPatienten = Object.keys(localStorage);
   } catch (err) {
-    console.error('er is een fout opgetreden', err)
+    console.error("er is een fout opgetreden", err);
   }
-  return opgeslagenPatienten.filter(patient => patient.includes("Nutrilator-patient"));
-}
+  return opgeslagenPatienten.filter((patient) =>
+    patient.includes("NutriCalc-patient"),
+  );
+};
 
-// Aanpassen zodat het het laatste item in de localstorage ophaalt
+// Deze functie haalt de benodigde data van een patiënt op, zodat deze weergegeven kan worden op de website
 export const getPatientData = (key) => {
   console.log(localStorage);
-  let data;
-  if (!localStorage) {
-    console.log("Local storage is niet beschikbaar")
+  let patientData;
+  if (!localStorage) { // Geeft een foutmelding als de local storage niet toegankelijk is en kapt de functie af
+      alert("De applicatie heeft geen toegang tot de local storage. Pas de instellingen aan of vraag hulp aan een beheerder.");
     return;
   }
 
   try {
-    data = JSON.parse(localStorage.getItem(key));
+    patientData = JSON.parse(localStorage.getItem(key));
   } catch (err) {
-    console.error(`Er is een fout opgetreden met het ophalen van ${patientData} from localStorage`, err);
+    alert(
+      `Er is een fout opgetreden met het ophalen van ${key} from localStorage`,
+      err,
+    );
   }
-  console.log("Patientdata succesvol geladen", data);
-  return data;
+  var datumNu = new Date();
+  patientData.datumLaatstBewerkt = datumNu.toLocaleString(); // update de laatst bewerkt datum
+  return patientData;
 };
 
-// Aanpassen zodat het werkt met onze applicatie
+// Slaat de huidige ingevulde gegevens op de website op onder een patiënt, met als key de geboortedatum van de patiënt.
 export const storePatientData = (key, patientData) => {
   if (!localStorage) return;
 
+  var datumNu = new Date();
+  patientData.datumLaatstBewerkt = datumNu.toLocaleString();
+
   try {
-    return localStorage.setItem('Nutrilator-patient: ' + key, JSON.stringify(patientData)); // "Nutrilator-patient wordt toegevoegd, zodat deze een unique identifier hebben voor de applicatie"
+    return localStorage.setItem(
+      "Nutrilator-patient: " + key,
+      JSON.stringify(patientData),
+    ); // "Nutrilator-patient wordt toegevoegd, zodat deze een unique identifier hebben voor de applicatie"
   } catch (err) {
     console.error(`Error storing item ${key} to localStorage`, err);
   }
 };
+
+export const checkStoredData = () => {
+  var opgeslagenPatienten = getLocalStoredData();
+  for (let key in opgeslagenPatienten) {
+    let patientData;
+    try {
+      patientData = JSON.parse(localStorage.getItem(key));
+    } catch (err) {
+      alert("De localstorage kon niet bereikt worden.")
+    };
+    if (patientData.datumLaatstBewerkt ) {
+      
+    }
+  }
+}
+
+const berekenTijdVerstreken = (datum) => {
+  
+}

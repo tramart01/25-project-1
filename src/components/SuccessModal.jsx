@@ -7,7 +7,6 @@ import Divider from '@mui/joy/Divider';
 import CloseRounded from '@mui/icons-material/CloseRounded';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HomeIcon from '@mui/icons-material/Home';
-import { renderTable } from '../pages/CalculatorPage';
 
 
 export default function SuccessModal (props) {

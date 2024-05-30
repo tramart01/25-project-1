@@ -1,0 +1,50 @@
+{
+  "title": "Enteraal voedingsmiddel toevoegen",
+  "type": "object",
+  "properties": {
+    "naam": {
+      "type": "string",
+      "title": "Naam van voedingsmiddel"
+    },
+    "calcium": {
+      "title": "Calcium",
+      "type": "number"
+    },
+    "calorieen": {
+      "title": "Calorieën",
+      "type": "number"
+    },
+    "eiwitten": {
+      "title": "Eiwitten",
+      "type": "number"
+    },
+    "fosfaat": {
+      "title": "Fosfaat",
+      "type": "number"
+    },
+    "is_poeder": {
+      "type": "string",
+      "title": "Is het een poeder? (true/false)"
+    },
+    "kalium": {
+      "title": "Kalium",
+      "type": "number"
+    },
+    "koolhydraten": {
+      "title": "Koolhydraten",
+      "type": "number"
+    },
+    "magnesium": {
+      "title": "Magnesium",
+      "type": "number"
+    },
+    "natrium": {
+      "title": "Natrium",
+      "type": "number"
+    },
+    "vetten": {
+      "title": "Vetten",
+      "type": "number"
+    }
+  }
+}

@@ -23,13 +23,13 @@ export default function Voedingsmiddel(props) {
   }, [hoeveelheid, voedingsmiddel, frequentie]);
 
   useEffect(() => {
-    if (hoeveelheid == 0) {
+    if (hoeveelheid == 0 || isNaN(hoeveelheid)) {
       setHoeveelheid("");
     }
   }, [hoeveelheid])
 
   useEffect(() => {
-    if (frequentie == 0) {
+    if (frequentie == 0 || isNaN(frequentie)) {
       setFrequentie("");
     }
   }, [frequentie])
@@ -135,63 +135,4 @@ export default function Voedingsmiddel(props) {
       }
     } 
   }
-
-}
-
-// Wordt niet gebruikt
-function renderDropDown(arr) {
-  return (
-    <Select defaultValue="" onChange={(event) => setVoedingsmiddel(event.target.value)}>
-      {arr.map((voedingsmiddel) => (
-        <Option value={voedingsmiddel.naam}>{voedingsmiddel.naam}</Option>
-      ))}
-    </Select>
-  );
-}
-
-//Functie om te testen of deze Class de gewenste output geeft
-function renderTable(arr) {
-  return (
-    <table>
-      <thead>
-        <tr>
-          <th>Naam</th>
-          <th>Calorieën</th>
-          <th>Eiwitten</th>
-          <th>Vetten</th>
-          <th>Koolhydraten</th>
-          <th>Natrium</th>
-          <th>Kalium</th>
-          <th>Calcium</th>
-          <th>Magnesium</th>
-          <th>Fosfaat</th>
-          <th>Is Polymeer</th>
-          <th>Min Leeftijd</th>
-          <th>Max Leeftijd</th>
-          <th>Min Gewicht</th>
-          <th>Max Gewicht</th>
-        </tr>
-      </thead>
-      <tbody>
-        {arr.map((voedingsmiddel, index) => (
-          <tr key={index}>
-            <td>{voedingsmiddel.naam}</td>
-            <td>{voedingsmiddel.calorieën}</td>
-            <td>{voedingsmiddel.eiwitten}</td>
-            <td>{voedingsmiddel.vetten}</td>
-            <td>{voedingsmiddel.koolhydraten}</td>
-            <td>{voedingsmiddel.natrium}</td>
-            <td>{voedingsmiddel.kalium}</td>
-            <td>{voedingsmiddel.calcium}</td>
-            <td>{voedingsmiddel.magnesium}</td>
-            <td>{voedingsmiddel.fosfaat}</td>
-            <td>{voedingsmiddel.minLeeftijd}</td>
-            <td>{voedingsmiddel.maxLeeftijd}</td>
-            <td>{voedingsmiddel.minGewicht}</td>
-            <td>{voedingsmiddel.maxGewicht}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  );
 }

@@ -44,6 +44,8 @@ export function berekenTotaal(voedingswaardeLijst) {
 
 
 export function berekenenVoedingswaardesTabel(voedingsLijst, gewicht) {
+  console.log(voedingsLijst);
+  // * 10 / 10 om de afronding goed te doen
   var vochtTotaal = Math.round(voedingsLijst.hoeveelheid * 10) / 10;
   var vochtKGPerDag = Math.round((vochtTotaal / gewicht) * 10) / 10;
   var vochtKGPerUur = Math.round(vochtKGPerDag / 24 * 10) / 10;
@@ -55,7 +57,7 @@ export function berekenenVoedingswaardesTabel(voedingsLijst, gewicht) {
   var natrium = Math.round((voedingsLijst.natrium / gewicht) * 10) / 10;
   var kalium = Math.round((voedingsLijst.kalium / gewicht) * 10) / 10;
 
-  return (
+  var returnObject =
     {
       vochtTotaal: vochtTotaal,
       vochtKGPerDag: vochtKGPerDag,
@@ -67,6 +69,14 @@ export function berekenenVoedingswaardesTabel(voedingsLijst, gewicht) {
       vetten: vetten,
       natrium: natrium,
       kalium: kalium
-    });
+    }
+    for (let item in returnObject) {
+      if (isNaN(returnObject[item])) {
+        console.log(returnObject[item], "NaN")
+        returnObject[item] = 0;
+      }
+    }
+  
+    return returnObject;
 }
 
