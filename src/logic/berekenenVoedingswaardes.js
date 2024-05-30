@@ -1,5 +1,5 @@
+// Berekent de toetale voedingswaarden in de enterale en parenterale lijst van de voedingsLijst
 export function berekenVoedingsWaardes(voedingsLijst) {
-  console.log("Beginlijst", voedingsLijst);
   var berekendObject = {
     calorieën: 0,
     koolhydraten: 0,
@@ -33,7 +33,6 @@ export function berekenVoedingsWaardes(voedingsLijst) {
 export function berekenTotaal(voedingswaardeLijst) {
   var lijstEnteraal = voedingswaardeLijst.enteraal;
   var lijstParenteraal = voedingswaardeLijst.parenteraal;
-  console.log("Totaal berekenen", lijstEnteraal, lijstParenteraal);
   var berekendObject = {};
 
   for (let item in lijstEnteraal) {
@@ -42,10 +41,9 @@ export function berekenTotaal(voedingswaardeLijst) {
   return berekendObject;
 }
 
-
+// Berekent de voedingswaardes om zodat deze juist kunnen worden weergegeven
 export function berekenenVoedingswaardesTabel(voedingsLijst, gewicht) {
-  console.log(voedingsLijst);
-  // * 10 / 10 om de afronding goed te doen
+  // elk getal wordt * 10 / 10, zodat de Math.round functie het getal kan afronden op 1 getal achter de komma
   var vochtTotaal = Math.round(voedingsLijst.hoeveelheid * 10) / 10;
   var vochtKGPerDag = Math.round((vochtTotaal / gewicht) * 10) / 10;
   var vochtKGPerUur = Math.round(vochtKGPerDag / 24 * 10) / 10;
@@ -71,8 +69,7 @@ export function berekenenVoedingswaardesTabel(voedingsLijst, gewicht) {
       kalium: kalium
     }
     for (let item in returnObject) {
-      if (isNaN(returnObject[item])) {
-        console.log(returnObject[item], "NaN")
+      if (isNaN(returnObject[item])) { // Als nog niet alles ingevuld is zijn er veel undefined waardes, dit zorgt ervoor dat deze niet worden weergegeven, maar dat er 0 staat
         returnObject[item] = 0;
       }
     }

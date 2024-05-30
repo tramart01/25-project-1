@@ -2,7 +2,6 @@ import Typography from "@mui/joy/Typography";
 import UserInput from "../components/UserInput";
 import VoedingsmiddelenLijst from "../components/VoedingsmiddelenLijst";
 import Button from "@mui/joy/Button";
-import Switch from "@mui/joy/Switch";
 import { useState, useEffect } from "react";
 import Divider from '@mui/joy/Divider';
 import Table from '@mui/joy/Table';
@@ -18,12 +17,12 @@ import SuccessModal from '../components/SuccessModal';
 
 export default function CalculatorPage(props) {
 
-  const ABSOULTEWAARDEVOCHT = 3500; // 3.5 L/dag
-  const BOVENGRENSVOCHT = 300; // 300mL/kg
-  const BOVENGRENSVOCHTBABY = 150; // 150mL/kg
+  const ABSOULTEWAARDEVOCHT = 3500; // maximale vochtintake op een dag is: 3.5 L/dag
+  const BOVENGRENSVOCHT = 300; // bovengrens vochtintake gebaseerd op gewicht is: 300mL/kg
+  const BOVENGRENSVOCHTBABY = 150; // Voor een baby is bovengrens: 150mL/kg
 
   // Alle enterale en parenterale voedingsmiddelen die gebruikt worden in de berekening, bewaard in de bijbehorende array
-  const [voedingsLijst, setVoedingsLijst] = useState({enteraal: [], parenteraal: []});
+  const [voedingsmiddelenLijst, setVoedingsmiddelenLijst] = useState({enteraal: [], parenteraal: []});
 
 
   //Lijst met de totale voedingswaarde voor de enterale en parenterale voedingsmiddelen + het totale aantal voedingsmiddelen
@@ -31,19 +30,21 @@ export default function CalculatorPage(props) {
 
   const [voedingswaardeTabel, setVoedingswaardeTabel] = useState({totaal: {}, enteraal: {}, parenteraal: {}});
   
-  const title = props.isNieuw ? "Nieuwe berekening" : "Laatst bewerkt";
+  const title = props.isNieuw ? "Nieuwe berekening" : "Laatst bewerkt"; // Als de berekening een nieuwe berekening is, wordt de titel "Nieuwe berekening" weergegeven, andrs wordt de titel "Laatst bewerkt" weergegeven.
   
   const [leeftijd, setLeeftijd] = useState(0);
   const [datum, setDatum] = useState("");
   const [gewichtInput, setGewichtInput] = useState("");
   const [gewicht, setGewicht] = useState(0);
 
-  const [opgeslagenObject, setOpgeslagenObject] = useState({});
+  const [opgeslagenObject, setOpgeslagenObject] = useState({}); // Als de patient opgeslagen wordt, dan wordt dat object ook in deze variabele opgeslagen, zodat er makkelijk gekeken kan worden of de ingevulde gegevens op de pagina aangepast zijn.
+  
   const [openAlert, setOpenAlert] = useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openAlertGrens, setOpenAlertGrens] = useState(false);
-  const navigate = useNavigate();
-  const { state } = useLocation();
+  
+  const navigate = useNavigate(); // Verzorgt de navigatie naar een andere pagina
+  const { state } = useLocation(); // Deze variabele wordt gebruikt om de key van de patiënt die bewerekt wordt te kunnen benaderen en gebruiken
 
   //Doordat het tweede argument een lege array is wordt het effect maar een keer doorlopen
   useEffect(() => {
@@ -56,23 +57,32 @@ export default function CalculatorPage(props) {
   //Als de voedingsLijst veranderd, moet de berekening van de voedingswaardes opnieuw gedaan worden.
   useEffect(() => {
     let berekendeWaarden = {};
-    for (let voedingsmiddel in voedingsLijst) {
-      berekendeWaarden[voedingsmiddel] = berekenVoedingsWaardes(voedingsLijst[voedingsmiddel]);
+    for (let voedingsmiddel in voedingsmiddelenLijst) {
+      berekendeWaarden[voedingsmiddel] = berekenVoedingsWaardes(voedingsmiddelenLijst[voedingsmiddel]);
     }
     berekendeWaarden.totaal = voedingswaardeLijst.totaal;
     setVoedingswaardeLijst(berekendeWaarden);
-  }, [voedingsLijst])
+  }, [voedingsmiddelenLijst])
 
   //Berekent de totale voedingswaarden wanneer er een verandering in de enterale of parenterale lijst plaatsvindt
   useEffect(() => {
-    console.log("enteraal of parenteraal veranderd");
     setVoedingswaardeLijst((voedingswaarde) => ({
       ...voedingswaarde,
       totaal: berekenTotaal(voedingswaardeLijst)
     }))
   }, [voedingswaardeLijst.enteraal, voedingswaardeLijst.parenteraal])
 
-  // Navragen of dit een goede manier is of dat het overdreven is :)
+  // Als de lijst met voedingswaardes verandert, moet de tabel geüpdate worden. Dit zorgt ervoor dat de voedingswaardes voor in de tabel opnieuw berekent worden en worden opgeslagen in de voedingswaardeTabel constante.
+  useEffect(() => {
+    let berekendeWaarden = {};
+
+    for (let voedingsmiddel in voedingswaardeLijst) {
+      berekendeWaarden[voedingsmiddel] = berekenenVoedingswaardesTabel(voedingswaardeLijst[voedingsmiddel], gewicht);
+    }
+    setVoedingswaardeTabel(berekendeWaarden);
+  }, [voedingswaardeLijst]);
+
+  // Als de lijst met voedingswaardes verandert, wordt gekeken of de ingevulde waardes de bovengrens/absulote waarde voor vochtintake overschrijdt
   useEffect(() => {
     if (leeftijd < 1) {
       var grens = BOVENGRENSVOCHTBABY;
@@ -83,24 +93,11 @@ export default function CalculatorPage(props) {
       setOpenAlertGrens(true);
     }
   }, [voedingswaardeLijst.totaal])
-
-
-  useEffect(() => {
-    let berekendeWaarden = {};
-
-    for (let voedingsmiddel in voedingswaardeLijst) {
-      console.log(voedingswaardeLijst);
-      berekendeWaarden[voedingsmiddel] = berekenenVoedingswaardesTabel(voedingswaardeLijst[voedingsmiddel], gewicht);
-    }
-    console.log(berekendeWaarden);
-    setVoedingswaardeTabel(berekendeWaarden);
-    console.log("Voor tabel", voedingswaardeTabel);
-  }, [voedingswaardeLijst]);
   
   return (
     <div className="bereken-pagina-container">
 
-      <AlertModal open={openAlert} onClose={setOpenAlert} onConfirm={() => navigate('/')} >Er zijn gegevens ingevuld, als je deze pagina verlaat zijn deze niet opgeslagen. Wil je doorgaan?</AlertModal>
+      <AlertModal open={openAlert} onClose={setOpenAlert} onConfirm={() => navigate('/')} >Er zijn gegevens ingevuld, als je deze pagina verlaat zullen deze niet opgeslagen worden. Wil je doorgaan?</AlertModal>
       
       <AlertModal open={openAlertGrens} onClose={setOpenAlertGrens} onConfirm={null} >Er is een grenswaarde bereikt. Let op dat je de patiënt niet teveel vocht geeft</AlertModal>
       
@@ -137,8 +134,8 @@ export default function CalculatorPage(props) {
         leeftijd={leeftijd}
         gewicht={gewicht}
         isEnteraal={true}
-        onChange={setVoedingsLijst}
-        voedingsLijst={voedingsLijst.enteraal}
+        onChange={setVoedingsmiddelenLijst}
+        voedingsLijst={voedingsmiddelenLijst.enteraal}
       ></VoedingsmiddelenLijst>
 
       <Typography level="h3" component="h3">
@@ -149,8 +146,8 @@ export default function CalculatorPage(props) {
         leeftijd={leeftijd}
         gewicht={gewicht}
         isEnteraal={false}
-        onChange={setVoedingsLijst}
-        voedingsLijst={voedingsLijst.parenteraal}
+        onChange={setVoedingsmiddelenLijst}
+        voedingsLijst={voedingsmiddelenLijst.parenteraal}
       ></VoedingsmiddelenLijst>
 
       
@@ -167,17 +164,6 @@ export default function CalculatorPage(props) {
       {renderTabel(voedingswaardeTabel)}
     </div>
   );
-
-  //Deze functie verzorgt het correct behandelen van een verandering in het gewicht input veld
-  function handleGewichtChange(gewicht) {
-    let gewichtInt = parseInt(gewicht);
-    if (gewichtInt !== null && gewichtInt >= 0) {
-      setGewicht(gewichtInt);
-    } else {
-      setGewicht(null);
-      setGewichtInput("");
-    }
-  }
 
   // Deze functie berekent de leeftijd van de patiënt uit de ingevulde datum in het Geboortedatum veld
   function berekenLeeftijd(datum) {
@@ -214,7 +200,6 @@ export default function CalculatorPage(props) {
   // Deze functie verzorgt het juist ophalen en weergeven van de patiëntgegevens uit de localStorage, d.m.v. de helperfunctie uit het importJSON bestand
   function patientGegevensOphalen() {
     let huidigePatient = getPatientData(state.patientId);
-    console.log("Huidigepatient", huidigePatient);
 
     setOpgeslagenObject(huidigePatient);
     
@@ -223,22 +208,82 @@ export default function CalculatorPage(props) {
     setGewicht(huidigePatient.gewicht);
     setGewichtInput(huidigePatient.gewicht);
     
-    setVoedingsLijst(huidigePatient.voedingsLijst);
+    setVoedingsmiddelenLijst(huidigePatient.voedingsLijst);
+  }
+  
+  //Tijdelijk, totdat de berekenen methode is uitgewerkt en dit makkelijker gemapt kan worden
+  function renderTabel(tabelWaardes) {
+    var enteraal = tabelWaardes.enteraal;
+    var parenteraal = tabelWaardes.parenteraal;
+    var totaal = tabelWaardes.totaal;
+
+    const tableRows = [
+      { label: 'Vocht', subLabel: 'totaal/dag', key: 'vochtTotaal' },
+      { subLabel: 'mL/kg/dag', key: 'vochtKGPerDag', bold: true },
+      { subLabel: 'mL/kg/uur', key: 'vochtKGPerUur' },
+      { label: 'Calorisch', subLabel: 'totaal/dag', key: 'calorieënTotaal' },
+      { subLabel: 'kcal/kg/dag', key: 'calorieënPerKG', bold: true },
+      { label: 'Koolhydraat', subLabel: 'mg/kg/min', key: 'koolhydraten', bold: true },
+      { label: 'Eiwit', subLabel: 'gr/kg/dag', key: 'eiwitten' },
+      { label: 'Vet', subLabel: 'gr/kg/dag', key: 'vetten' },
+      { label: 'Natrium', subLabel: 'mmol/kg/dag', key: 'natrium' },
+      { label: 'Kalium', subLabel: 'mmol/kg/dag', key: 'kalium' },
+    ];
+
+      return (
+        <Sheet sx={{height: "100%", overflow: "auto"}}>
+          <Table aria-label="basic table" borderAxis="none" sx={{ '& tr > *:not(:first-child)': { textAlign: 'right' } }}>
+            <thead>
+              <tr>
+                <th></th>
+                <th></th>
+                <th>Totaal</th>
+                <th>Enteraal</th>
+                <th>Parenteraal</th>
+              </tr>
+            </thead>
+            <tbody>
+              {tableRows.map((row, index) => {
+                return (
+                  <tr key={index} className={row.bold ? 'tabel-dikgedrukt' : ''}>
+                    <td className={row.bold ? 'tabel-dikgedrukt' : ''}>{row.label}</td>
+                    <td>{row.subLabel}</td>
+                    <td>{totaal[row.key]}</td>
+                    <td>{enteraal[row.key]}</td>
+                    <td>{parenteraal[row.key]}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </Table>
+        </Sheet>
+      );
+
   }
 
+  //Deze functie verzorgt het correct behandelen van een verandering in het gewicht input veld
+  function handleGewichtChange(gewicht) {
+    let gewichtInt = parseInt(gewicht);
+    if (gewichtInt !== null && gewichtInt >= 0) {
+      setGewicht(gewichtInt);
+    } else {
+      setGewicht(null);
+      setGewichtInput("");
+    }
+  }
+  
   // Deze functie verzorgt het juist opslaan van de patiëntgegevens in de localStorage, d.m.v. de helperfunctie uit het inportJSON-bestand
   function handlePatientOpslaan() {
     setOpenSuccess(true);
-    setOpgeslagenObject({datum, gewicht, voedingsLijst});
-    storePatientData(datum, {datum, gewicht, voedingsLijst});
+    setOpgeslagenObject({datum, gewicht, voedingsLijst: voedingsmiddelenLijst});
+    storePatientData(datum, {datum, gewicht, voedingsLijst: voedingsmiddelenLijst});
   }
 
   // Deze functie kijkt of de huidige ingevulde gelijk staat aan de opgeslagen informatie. Zo niet, dan krijgt de gebruiker een popup waarin aangegeven wordt dat de gegevens niet opgeslagen zijn als de gebruiker op doorgaan drukt
   function handleOnHomeClicked() {
-    let objectTest = {datum, gewicht, voedingsLijst};
-    console.log("CLICK", objectTest, opgeslagenObject);
+    let objectTest = {datum, gewicht, voedingsLijst: voedingsmiddelenLijst};
     
-    if (gewicht === 0 && leeftijd === 0 && voedingsLijst.enteraal.length === 0 && voedingsLijst.parenteraal.length == 0) {
+    if (gewicht === 0 && leeftijd === 0 && voedingsmiddelenLijst.enteraal.length === 0 && voedingsmiddelenLijst.parenteraal.length == 0) {
       navigate('/');
     } else if (JSON.stringify(opgeslagenObject) === JSON.stringify(objectTest)) {
       navigate('/');
@@ -260,53 +305,4 @@ Natrium Intake: ${voedingswaardeLijst.totaal.koolhydraten} mmol/kg/d`;
       });
     
   }
-}
-
-//Tijdelijk, totdat de berekenen methode is uitgewerkt en dit makkelijker gemapt kan worden
-export function renderTabel(tabelWaardes) {
-  var enteraal = tabelWaardes.enteraal;
-  var parenteraal = tabelWaardes.parenteraal;
-  var totaal = tabelWaardes.totaal;
-
-  const tableRows = [
-    { label: 'Vocht', subLabel: 'totaal/dag', key: 'vochtTotaal' },
-    { subLabel: 'mL/kg/dag', key: 'vochtKGPerDag', bold: true },
-    { subLabel: 'mL/kg/uur', key: 'vochtKGPerUur' },
-    { label: 'Calorisch', subLabel: 'totaal/dag', key: 'calorieënTotaal' },
-    { subLabel: 'kcal/kg/dag', key: 'calorieënPerKG', bold: true },
-    { label: 'Koolhydraat', subLabel: 'mg/kg/min', key: 'koolhydraten', bold: true },
-    { label: 'Eiwit', subLabel: 'gr/kg/dag', key: 'eiwitten' },
-    { label: 'Vet', subLabel: 'gr/kg/dag', key: 'vetten' },
-    { label: 'Natrium', subLabel: 'mmol/kg/dag', key: 'natrium' },
-    { label: 'Kalium', subLabel: 'mmol/kg/dag', key: 'kalium' },
-  ];
-  
-    return (
-      <Sheet sx={{height: "100%", overflow: "auto"}}>
-        <Table aria-label="basic table" borderAxis="none" sx={{ '& tr > *:not(:first-child)': { textAlign: 'right' } }}>
-          <thead>
-            <tr>
-              <th></th>
-              <th></th>
-              <th>Totaal</th>
-              <th>Enteraal</th>
-              <th>Parenteraal</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tableRows.map((row, index) => {
-              return (
-                <tr key={index} className={row.bold ? 'tabel-dikgedrukt' : ''}>
-                  <td className={row.bold ? 'tabel-dikgedrukt' : ''}>{row.label}</td>
-                  <td>{row.subLabel}</td>
-                  <td>{totaal[row.key]}</td>
-                  <td>{enteraal[row.key]}</td>
-                  <td>{parenteraal[row.key]}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-      </Sheet>
-    );
 }

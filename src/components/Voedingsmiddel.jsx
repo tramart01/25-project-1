@@ -1,27 +1,26 @@
 import Select, { selectClasses } from '@mui/joy/Select';
 import Option from '@mui/joy/Option';
-import { useState, useEffect } from 'react';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import UserInput from '../components/UserInput';
-import ListItem from '@mui/joy/ListItem';
 import Box from '@mui/joy/Box';
-import Typography from '@mui/joy/Typography';
 import ListDivider from '@mui/joy/ListDivider';
 import IconButton from '@mui/joy/IconButton';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import CloseRounded from '@mui/icons-material/CloseRounded';
+import { useState, useEffect } from 'react';
+import UserInput from '../components/UserInput';
 
 
 export default function Voedingsmiddel(props) {
-  const [voedingsmiddel, setVoedingsmiddel] = useState(props.naam);
+  const [voedingsmiddel, setVoedingsmiddel] = useState(props.naam); // naam van geselecteerde voedingsmiddel
   const [hoeveelheid, setHoeveelheid] = useState(props.hoeveelheid);
   const [frequentie, setFrequentie] = useState(props.frequentie);
-  const voedingsmiddelLijst = props.voedingsmiddelLijst;
+  const voedingsmiddelLijst = props.voedingsmiddelLijst; // De lijst met alle voedingsmiddelen waaruit gekozen kan worden
 
-  
+
   useEffect(() => {
     handleOnChange(props.id, props.onChange);
   }, [hoeveelheid, voedingsmiddel, frequentie]);
 
+  // Deze twee functies zorgen ervoor dat er alleen getallen ingevuld worden in de hoeveelheid en frequentie input
   useEffect(() => {
     if (hoeveelheid == 0 || isNaN(hoeveelheid)) {
       setHoeveelheid("");
@@ -33,21 +32,10 @@ export default function Voedingsmiddel(props) {
       setFrequentie("");
     }
   }, [frequentie])
-
-
-  // useEffect(() => {
-  //   setHoeveelheid(props.hoeveelheid)
-  // }, [props.hoeveelheid])
-
-  // useEffect(() => {
-  //   setHoeveelheid(props.hoeveelheid);
-  // }, [props.frequentie])
-  
   
   return (
     <div className="voedingsmiddel">
-      <Box className="voedingsmiddel-container"
-        sx={{}}>
+      <Box className="voedingsmiddel-container">
         <Select className="voedingsmiddel-select" 
           placeholder="---" 
           indicator={<KeyboardArrowDownIcon />} 
@@ -92,8 +80,9 @@ export default function Voedingsmiddel(props) {
             }
           }}
           >          
-          
-          {voedingsmiddelLijst.length > 0 && voedingsmiddelLijst.map((voedingsmiddel, index) => (
+
+          {/* Weergeeft alle items in de voedingsmiddelLijst als een keuze in het dropdown menu. */}
+          {voedingsmiddelLijst.map((voedingsmiddel, index) => (
             <>
                <Option className="voedingsmiddel-option" key={voedingsmiddel.naam} value={voedingsmiddel.naam} 
                  sx={{
@@ -105,12 +94,10 @@ export default function Voedingsmiddel(props) {
                }}/>}
             </>
            ))}
-          
-          {voedingsmiddelLijst.length === 0 && <Option className="voedingsmiddel-option" value="" indicator={<KeyboardArrowDownIcon />} disabled={true}>Geen voedingsmiddelen voor deze gegevens</Option>}
         </Select>
       </Box>
 
-      {/* Hier navragen of er een manier is om onDefocus niet te hoeven gebruiken, of anders op een of andere manier geen waarde meegeven */}
+      {/* Als het voedingsmiddel enteraal is moet er ook gekozen worden wat de frequentie van toediening is, dus is een extra Input nodig. */}
       {props.isEnteraal && 
         <>
           <UserInput naamClass="voedingsmiddel-input" label="none" placeholder="Frequentie" value={frequentie} changeValue={setFrequentie} onDefocus={setFrequentie}  endDecorator="keer" />

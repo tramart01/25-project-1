@@ -1,7 +1,6 @@
 import IconButton from '@mui/joy/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import Voedingsmiddel from '../components/Voedingsmiddel';
-import { useState, useEffect } from 'react';
 import { returnVoedingsLijst } from '../logic/importJSON';
 
 

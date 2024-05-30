@@ -1,25 +1,26 @@
 import Typography from "@mui/joy/Typography";
 import IconButton from "@mui/joy/Button";
-import AddIcon from "@mui/icons-material/Add";
-import { Link } from "react-router-dom";
-import { getPatientData, getLocalStoredData } from "../logic/localSave";
 import Divider from "@mui/joy/Divider";
-import Modal from "@mui/joy/Modal";
-import ModalClose from "@mui/joy/ModalClose";
-import ModalDialog from "@mui/joy/ModalDialog";
-import InstallPWAModal from "../components/InstallPWAModal";
-import { useState } from "react";
-import { formatDate } from "../logic/helperfunctions";
-import { DialogContent, DialogTitle } from "@mui/joy";
-import PersonIcon from "@mui/icons-material/Person";
 import Button from "@mui/joy/Button";
 import Tooltip from "@mui/joy/Tooltip";
-import Chip from "@mui/joy/Chip";
+import { Modal, ModalDialog, ModalClose, DialogContent, DialogTitle } from "@mui/joy";
+import AddIcon from "@mui/icons-material/Add";
+import PersonIcon from "@mui/icons-material/Person";
+import CloseRounded from "@mui/icons-material/CloseRounded";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { getLocalStoredData, removePatientData } from "../logic/localSave";
+import InstallPWAModal from "../components/InstallPWAModal";
+import { formatDate } from "../logic/helperfunctions";
+
+
+
 
 const Home = () => {
   const [open, setOpen] = useState(false); // Bepaalt of de modal met opgeslagen patiënten zichtbaar is
   const [opgeslagenPatienten, setOpgeslagenPatienten] = useState([]); // De lijst met opgeslagen patiënten die worden in geladen bij het laden van de pagina
 
+  
   return (
     <div className="home-container">
       <InstallPWAModal />
@@ -75,6 +76,7 @@ const Home = () => {
         </Link>
       </div>
 
+      {/* Modal waarin de opgeslagen patiënten weergegeven worden */}
       <Modal
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
@@ -88,7 +90,7 @@ const Home = () => {
           <DialogContent sx={{ alignSelf: "center", width: "80%" }}>
             {opgeslagenPatienten.map((patient, i) => (
               <Link
-                key={patient.datum}
+                key={patient}
                 to="/berekenen-bestaand"
                 state={{ patientId: patient }}
               >
@@ -103,18 +105,25 @@ const Home = () => {
                   }}
                   startDecorator={<PersonIcon />}
                   endDecorator={
-                    <Tooltip
-                      title="Aantal dagen voordat patiënt verwijderd wordt"
-                      placement="right"
-                    >
-                      <Chip size="sm" variant="soft">
-                        5
-                      </Chip>
+                    <Tooltip title="Verwijder patiënt">
+                      <IconButton
+                        onClick={e => handlePatientVerwijderen(e, patient)}
+                        sx={{
+                          padding: "0",
+                          backgroundColor: "transparent",
+                          '&:hover' : {
+                            backgroundColor: "transparent",
+                            color: 'var(--oranje)',	
+                          }                    
+                        }}
+                      >
+                        <CloseRounded />
+                      </IconButton>
                     </Tooltip>
                   }
                   id={i}
                 >
-                  {formatDate(patient.substring(20), false)}
+                  {formatDate(patient.substring(19), false)}  {/* Gebruik van substring(19), zodat "NutriCalc-patiënt: " uit de key gefilterd kan worden en alleen de geboortedatum weergegegven wordt. */}
                 </Button>
               </Link>
             ))}
@@ -123,10 +132,23 @@ const Home = () => {
       </Modal>
     </div>
   );
+
+  // Haalt de opgeslagen patiënten op uit de localstorage en slaat ze op in de opgeslagenPatienten-constante
   function GegevensInladen() {
     let opgehaaldeKeys = getLocalStoredData();
     setOpgeslagenPatienten(opgehaaldeKeys);
-    setOpen(true);
+    if (opgehaaldeKeys.length !== 0) {
+      setOpen(true);
+    } else {
+      setOpen(false);
+    }
+  }
+
+  //Verwerkt het verwijderen van een patiënt
+  function handlePatientVerwijderen(e, patient) {
+    e.preventDefault();
+    removePatientData(patient);
+    GegevensInladen();
   }
 };
 
