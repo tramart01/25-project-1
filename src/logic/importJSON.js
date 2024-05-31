@@ -1,4 +1,4 @@
-import voedingsEigenschappenEnteraal from '../data/voedingseigenschappen test.json';
+import voedingsEigenschappenEnteraal from '../data/enteraalVoeding.json';
 import voedingsEigenschappenParenteraal from '../data/parenteraalVoeding.json';
 
 export function returnVoedingsLijst(isEnteraal) {
